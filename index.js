@@ -130,7 +130,7 @@ function optimize(args, callback) {
 		// 处理开始, 得出待处理文件列表
 		function(next) {
 			log.log('info', 'Optimize start');
-			parse('./public');
+			parse(hexo.public_dir);
 			next();
 		},
 		// 处理HTML
