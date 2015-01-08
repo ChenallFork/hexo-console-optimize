@@ -125,7 +125,7 @@ function parse(dir) {
 	}
 };
 
-function optimize(args) {
+function optimize(args, callback) {
 	async.series([
 		// 处理开始, 得出待处理文件列表
 		function(next) {
@@ -176,13 +176,16 @@ function optimize(args) {
 				hexo.call("deploy", function() {});
 			}
 			next();
+		},
+		function(next) {
+			callback();
 		}
 	]);
 }
 hexo.extend.console.register('optimize', 'Hexo Optimize', {
 	alias: 'o'
-}, function(args) {
+}, function(args, callback) {
 	hexo.call("generate", function() {
-		optimize(args);
+		optimize(args, callback);
 	});
 });
