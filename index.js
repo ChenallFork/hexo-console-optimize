@@ -173,12 +173,12 @@ function optimize(args, callback) {
 		// 如果有-d参数则调用deploy进行发布
 		function(next) {
 			if (args.d) {
-				hexo.call("deploy", function() {});
+				hexo.call("deploy", function() {
+					callback();
+				});
+			} else {
+				callback();
 			}
-			next();
-		},
-		function(next) {
-			callback();
 		}
 	]);
 }
