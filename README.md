@@ -16,7 +16,7 @@ http://hexo.io/
 进到你的hexo博客根目录安装本插件
 
 ```
-npm install hexo-console-optimize
+npm install hexo-console-optimize --save
 ```
 
 ##命令行

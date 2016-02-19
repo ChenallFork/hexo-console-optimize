@@ -125,12 +125,12 @@ function parse(dir) {
 	}
 };
 
-function optimize(args) {
+function optimize(args, callback) {
 	async.series([
 		// 处理开始, 得出待处理文件列表
 		function(next) {
 			log.log('info', 'Optimize start');
-			parse('./public');
+			parse(hexo.public_dir);
 			next();
 		},
 		// 处理HTML
@@ -173,16 +173,19 @@ function optimize(args) {
 		// 如果有-d参数则调用deploy进行发布
 		function(next) {
 			if (args.d) {
-				hexo.call("deploy", function() {});
+				hexo.call("deploy", function() {
+					callback();
+				});
+			} else {
+				callback();
 			}
-			next();
 		}
 	]);
 }
 hexo.extend.console.register('optimize', 'Hexo Optimize', {
 	alias: 'o'
-}, function(args) {
+}, function(args, callback) {
 	hexo.call("generate", function() {
-		optimize(args);
+		optimize(args, callback);
 	});
 });
